@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="security-authorize:war">
+    <output-path>$PROJECT_DIR$/security-authorize/target</output-path>
+    <root id="archive" name="security-authorize.war">
+      <element id="artifact" artifact-name="security-authorize:war exploded" />
+    </root>
+  </artifact>
+</component>
