@@ -16,7 +16,24 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <security-core.version>1.0-SNAPSHOT</security-core.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.billow</groupId>
+            <artifactId>security-core</artifactId>
+            <version>${security-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <finalName>security-authorize</finalName>

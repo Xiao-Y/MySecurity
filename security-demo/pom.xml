@@ -16,15 +16,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <security-core.version>1.0-SNAPSHOT</security-core.version>
+        <security-browser.version>1.0-SNAPSHOT</security-browser.version>
         <security-authorize.version>1.0-SNAPSHOT</security-authorize.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.billow</groupId>
-            <artifactId>security-core</artifactId>
-            <version>${security-core.version}</version>
+            <artifactId>security-browser</artifactId>
+            <version>${security-authorize.version}</version>
         </dependency>
         <dependency>
             <groupId>com.billow</groupId>
