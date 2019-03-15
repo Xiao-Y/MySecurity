@@ -1,14 +1,25 @@
 package com.billow.security.browser;
 
-import com.billow.security.core.utils.VerifyCodeUtils;
-import org.springframework.social.connect.web.HttpSessionSessionStrategy;
-import org.springframework.social.connect.web.SessionStrategy;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.billow.security.core.properties.SecurityConstants;
+import com.billow.security.core.properties.SecurityProperties;
+import com.billow.security.core.support.BaseResponse;
+import com.billow.security.core.support.ResCodeEnum;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @author liuyongtao
@@ -17,14 +28,26 @@ import java.io.IOException;
 @RestController
 public class BrowserController {
 
-    private static final String SESSION_KEY_CODE = "SESSION_KEY_CODE";
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @GetMapping("/code/image")
-    public void getCodeImage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int w = 120;
-        int h = 30;
-        String verifyCode = VerifyCodeUtils.generateVerifyCode(4);
-        VerifyCodeUtils.outputImage(w, h, response.getOutputStream(), verifyCode);
-//        sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY_CODE, verifyCode);
+    RequestCache requestCache = new HttpSessionRequestCache();
+    RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
+    @Autowired
+    private SecurityProperties securityProperties;
+
+    @RequestMapping(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
+    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
+    public BaseResponse requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        SavedRequest savedRequest = requestCache.getRequest(request, response);
+        if (savedRequest != null) {
+            String redirectUrl = savedRequest.getRedirectUrl();
+            logger.info("引发跳转的URL:{}", redirectUrl);
+            if (StringUtils.endsWithIgnoreCase(redirectUrl, ".html")) {
+                redirectStrategy.sendRedirect(request, response, securityProperties.getBrowser().getSignInPage());
+            }
+        }
+        BaseResponse baseResponse = new BaseResponse(ResCodeEnum.RESCODE_NOT_FOUND_SIGNIN_PAGE.getStatusCode());
+        return baseResponse;
     }
 }

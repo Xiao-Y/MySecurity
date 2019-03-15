@@ -15,6 +15,20 @@ public class BrowserProperties {
      * 登录响应的方式，默认是json
      */
     private LoginResponseType signInResponseType = LoginResponseType.JSON;
+    /**
+     * 登录成功后跳转的地址，如果设置了此属性，则登录成功后总是会跳到这个地址上。
+     * <p>
+     * 只在signInResponseType为REDIRECT时生效
+     */
+    private String singInSuccessUrl;
+    private String loginProcessingUrl = SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_FORM;
+
+    /**
+     * 记住我过期时间（秒）
+     */
+    private int rememberMeSeconds = 60 * 60 * 24 * 30;
+
+    private ValidateProperties validate = new ValidateProperties();
 
     public String getSignInPage() {
         return signInPage;
@@ -31,6 +45,42 @@ public class BrowserProperties {
 
     public BrowserProperties setSignInResponseType(LoginResponseType signInResponseType) {
         this.signInResponseType = signInResponseType;
+        return this;
+    }
+
+    public ValidateProperties getValidate() {
+        return validate;
+    }
+
+    public BrowserProperties setValidate(ValidateProperties validate) {
+        this.validate = validate;
+        return this;
+    }
+
+    public String getSingInSuccessUrl() {
+        return singInSuccessUrl;
+    }
+
+    public BrowserProperties setSingInSuccessUrl(String singInSuccessUrl) {
+        this.singInSuccessUrl = singInSuccessUrl;
+        return this;
+    }
+
+    public int getRememberMeSeconds() {
+        return rememberMeSeconds;
+    }
+
+    public BrowserProperties setRememberMeSeconds(int rememberMeSeconds) {
+        this.rememberMeSeconds = rememberMeSeconds;
+        return this;
+    }
+
+    public String getLoginProcessingUrl() {
+        return loginProcessingUrl;
+    }
+
+    public BrowserProperties setLoginProcessingUrl(String loginProcessingUrl) {
+        this.loginProcessingUrl = loginProcessingUrl;
         return this;
     }
 }

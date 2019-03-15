@@ -26,6 +26,10 @@ public class RbacUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.info("username:{}", username);
 
+        if (!"admin".equals(username)) {
+            throw new UsernameNotFoundException("没有查询到用户");
+        }
+
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("admin"));
         return new User(username, "123456", authorities);
