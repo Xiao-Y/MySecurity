@@ -4,7 +4,7 @@ import com.billow.security.core.properties.SecurityConstants;
 import com.billow.security.core.properties.SecurityProperties;
 import com.billow.security.core.support.BaseResponse;
 import com.billow.security.core.support.ResCodeEnum;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

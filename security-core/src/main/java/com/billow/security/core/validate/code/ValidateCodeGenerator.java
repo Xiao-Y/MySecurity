@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public interface ValidateCodeGenerator {
 
-    public static final String SESSION_KEY_CODE = "SESSION_KEY_CODE";
+    String SESSION_KEY_CODE = "SESSION_KEY_CODE";
 
     /**
      * 生成校验码

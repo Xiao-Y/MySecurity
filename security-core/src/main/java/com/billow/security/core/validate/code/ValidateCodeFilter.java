@@ -1,14 +1,12 @@
 package com.billow.security.core.validate.code;
 
 import com.billow.security.core.properties.SecurityProperties;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
-import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -22,8 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 验证码校验
@@ -31,16 +27,13 @@ import java.util.stream.Stream;
  * @author liuyongtao
  * @create 2019-03-15 9:58
  */
-@Component
 public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
 
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
     private final static Set<String> urls = new HashSet<>();
 
-    @Autowired
     private SecurityProperties securityProperties;
-    @Autowired
     private AuthenticationFailureHandler authenticationFailureHandler;
 
     @Override

@@ -4,7 +4,7 @@ import com.billow.security.core.properties.LoginResponseType;
 import com.billow.security.core.properties.SecurityProperties;
 import com.billow.security.core.support.BaseResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

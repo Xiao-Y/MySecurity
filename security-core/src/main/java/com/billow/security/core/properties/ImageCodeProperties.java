@@ -11,7 +11,7 @@ public class ImageCodeProperties {
     private int length = 4;
     private int width = 67;
     private int height = 23;
-    private int expireIn = 10;
+    private int expireIn = 30;
     private String urls;
 
     public int getLength() {
