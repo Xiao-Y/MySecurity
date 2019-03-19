@@ -9,6 +9,7 @@ package com.billow.security.core.properties;
 public class ValidateProperties {
 
     private ImageCodeProperties imageCode = new ImageCodeProperties();
+    private SmsCodeProperties smsCode = new SmsCodeProperties();
 
     public ImageCodeProperties getImageCode() {
         return imageCode;
@@ -16,6 +17,15 @@ public class ValidateProperties {
 
     public ValidateProperties setImageCode(ImageCodeProperties imageCode) {
         this.imageCode = imageCode;
+        return this;
+    }
+
+    public SmsCodeProperties getSmsCode() {
+        return smsCode;
+    }
+
+    public ValidateProperties setSmsCode(SmsCodeProperties smsCode) {
+        this.smsCode = smsCode;
         return this;
     }
 }

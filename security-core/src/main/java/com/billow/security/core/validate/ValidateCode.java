@@ -1,4 +1,4 @@
-package com.billow.security.core.validate.code;
+package com.billow.security.core.validate;
 
 import java.time.LocalDateTime;
 

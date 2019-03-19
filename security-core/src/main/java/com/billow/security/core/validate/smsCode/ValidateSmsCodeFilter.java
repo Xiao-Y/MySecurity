@@ -1,6 +1,9 @@
-package com.billow.security.core.validate.code;
+package com.billow.security.core.validate.smsCode;
 
 import com.billow.security.core.properties.SecurityProperties;
+import com.billow.security.core.validate.ValidateCode;
+import com.billow.security.core.validate.ValidateCodeException;
+import com.billow.security.core.validate.CodeGenerator;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -22,12 +25,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 验证码校验
+ * 短信验证码校验
  *
  * @author liuyongtao
  * @create 2019-03-15 9:58
  */
-public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
+public class ValidateSmsCodeFilter extends OncePerRequestFilter implements InitializingBean {
 
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
@@ -73,8 +76,8 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     private void validate(HttpServletRequest request) throws ServletRequestBindingException {
         ServletWebRequest servletWebRequest = new ServletWebRequest(request);
 
-        ValidateCode codeInSession = (ValidateCode) sessionStrategy.getAttribute(servletWebRequest, ValidateCodeGenerator.SESSION_KEY_CODE);
-        String codeInRequest = ServletRequestUtils.getStringParameter(request, "imageCode");
+        ValidateCode codeInSession = (ValidateCode) sessionStrategy.getAttribute(servletWebRequest, CodeGenerator.SESSION_KEY_CODE_IMAGE);
+        String codeInRequest = ServletRequestUtils.getStringParameter(request, "mobile");
 
         if (StringUtils.isBlank(codeInRequest)) {
             throw new ValidateCodeException("验证码的值不能为空！");
@@ -83,22 +86,22 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             throw new ValidateCodeException("验证码不存在");
         }
         if (codeInSession.isExpried()) {
-            sessionStrategy.removeAttribute(servletWebRequest, ValidateCodeGenerator.SESSION_KEY_CODE);
+            sessionStrategy.removeAttribute(servletWebRequest, CodeGenerator.SESSION_KEY_CODE_SMS);
             throw new ValidateCodeException("验证码已过期");
         }
         if (!StringUtils.equalsIgnoreCase(codeInSession.getCode(), codeInRequest)) {
             throw new ValidateCodeException("验证码不匹配");
         }
 
-        sessionStrategy.removeAttribute(servletWebRequest, ValidateCodeGenerator.SESSION_KEY_CODE);
+        sessionStrategy.removeAttribute(servletWebRequest, CodeGenerator.SESSION_KEY_CODE_SMS);
     }
 
-    public ValidateCodeFilter setAuthenticationFailureHandler(AuthenticationFailureHandler authenticationFailureHandler) {
+    public ValidateSmsCodeFilter setAuthenticationFailureHandler(AuthenticationFailureHandler authenticationFailureHandler) {
         this.authenticationFailureHandler = authenticationFailureHandler;
         return this;
     }
 
-    public ValidateCodeFilter setSecurityProperties(SecurityProperties securityProperties) {
+    public ValidateSmsCodeFilter setSecurityProperties(SecurityProperties securityProperties) {
         this.securityProperties = securityProperties;
         return this;
     }

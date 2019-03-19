@@ -2,15 +2,13 @@ package com.billow.security.browser;
 
 import com.billow.security.core.properties.SecurityConstants;
 import com.billow.security.core.properties.SecurityProperties;
-import com.billow.security.core.validate.code.ValidateCodeFilter;
+import com.billow.security.core.validate.imageCode.ValidateImageCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -43,7 +41,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         // 添加验证码过滤器
-        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
+        ValidateImageCodeFilter validateCodeFilter = new ValidateImageCodeFilter();
         validateCodeFilter.setAuthenticationFailureHandler(defaultAuthenticationFailureHandler);
         validateCodeFilter.setSecurityProperties(securityProperties);
         validateCodeFilter.afterPropertiesSet();
@@ -81,6 +79,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         list.add(securityProperties.getBrowser().getSignInPage());
         list.add(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL);
         list.add("/code/image");
+        list.add("/code/sms");
         return list.toArray(new String[list.size()]);
     }
 
