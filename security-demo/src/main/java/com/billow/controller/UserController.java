@@ -3,9 +3,13 @@ package com.billow.controller;
 import com.billow.dto.User;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +33,21 @@ import java.util.List;
 public class UserController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
+
+    @GetMapping("/me")
+    public Object getCurrentUser(Authentication user, HttpServletRequest request) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException {
+
+//		String token = StringUtils.substringAfter(request.getHeader("Authorization"), "bearer ");
+//
+//		Claims claims = Jwts.parser().setSigningKey(securityProperties.getOauth2().getJwtSigningKey().getBytes("UTF-8"))
+//					.parseClaimsJws(token).getBody();
+//
+//		String company = (String) claims.get("company");
+//
+//		System.out.println(company);
+
+        return user;
+    }
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable("id") String id) {

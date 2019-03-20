@@ -3,7 +3,7 @@ package com.billow.security.core.validate.imageCode;
 import com.billow.security.core.properties.SecurityProperties;
 import com.billow.security.core.utils.VerifyCodeUtils;
 import com.billow.security.core.validate.CodeGenerator;
-import com.billow.security.core.validate.ValidateCode;
+import com.billow.security.core.support.ValidateCode;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author liuyongtao
  * @create 2019-03-15 9:20
  */
-public class DefaultImageCodeGenerator implements CodeGenerator {
+public class ImageCodeGenerator implements CodeGenerator {
 
     private SecurityProperties securityProperties;
 
@@ -29,7 +29,7 @@ public class DefaultImageCodeGenerator implements CodeGenerator {
         return validateCode;
     }
 
-    public DefaultImageCodeGenerator setSecurityProperties(SecurityProperties securityProperties) {
+    public ImageCodeGenerator setSecurityProperties(SecurityProperties securityProperties) {
         this.securityProperties = securityProperties;
         return this;
     }

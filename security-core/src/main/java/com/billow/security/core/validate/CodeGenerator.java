@@ -1,12 +1,11 @@
 package com.billow.security.core.validate;
 
+import com.billow.security.core.support.ValidateCode;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface CodeGenerator {
-
-    String SESSION_KEY_CODE_SMS = "SESSION_KEY_CODE_SMS";
-    String SESSION_KEY_CODE_IMAGE = "SESSION_KEY_CODE_IMAGE";
 
     /**
      * 生成校验码

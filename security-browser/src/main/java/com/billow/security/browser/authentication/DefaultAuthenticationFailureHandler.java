@@ -4,7 +4,7 @@ import com.billow.security.core.properties.LoginResponseType;
 import com.billow.security.core.properties.SecurityProperties;
 import com.billow.security.core.support.BaseResponse;
 import com.billow.security.core.support.ResCodeEnum;
-import com.billow.security.core.validate.ValidateCodeException;
+import com.billow.security.core.exception.ValidateCodeException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.billow.security.core.validate;
+package com.billow.security.core.exception;
 
 import org.springframework.security.core.AuthenticationException;
 

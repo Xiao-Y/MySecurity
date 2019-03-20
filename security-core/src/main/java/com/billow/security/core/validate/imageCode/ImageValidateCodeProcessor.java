@@ -3,7 +3,7 @@ package com.billow.security.core.validate.imageCode;
 import com.billow.security.core.properties.SecurityProperties;
 import com.billow.security.core.utils.VerifyCodeUtils;
 import com.billow.security.core.validate.AbstractValidateCodeProcessor;
-import com.billow.security.core.validate.ValidateCode;
+import com.billow.security.core.support.ValidateCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.ServletRequestUtils;

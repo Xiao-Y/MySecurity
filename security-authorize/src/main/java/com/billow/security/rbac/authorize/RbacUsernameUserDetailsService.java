@@ -19,8 +19,8 @@ import java.util.Set;
  * @author liuyongtao
  * @create 2019-03-13 15:22
  */
-@Service
-public class RbacUserDetailsService implements UserDetailsService {
+@Service("rbacUsernameUserDetailsService")
+public class RbacUsernameUserDetailsService implements UserDetailsService {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 

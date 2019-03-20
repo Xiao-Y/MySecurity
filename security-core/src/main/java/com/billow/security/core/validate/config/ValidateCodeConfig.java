@@ -1,9 +1,10 @@
-package com.billow.security.core.validate;
+package com.billow.security.core.validate.config;
 
 import com.billow.security.core.properties.SecurityProperties;
-import com.billow.security.core.validate.imageCode.DefaultImageCodeGenerator;
-import com.billow.security.core.validate.smsCode.DefaultSmsCodeGenerator;
-import com.billow.security.core.validate.smsCode.DefaultSmsCodeSender;
+import com.billow.security.core.validate.CodeGenerator;
+import com.billow.security.core.validate.imageCode.ImageCodeGenerator;
+import com.billow.security.core.validate.smsCode.SmsCodeGenerator;
+import com.billow.security.core.validate.smsCode.impl.DefaultSmsCodeSender;
 import com.billow.security.core.validate.smsCode.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -23,7 +24,7 @@ public class ValidateCodeConfig {
     @Bean
     @ConditionalOnMissingBean(name = "imageCodeGenerator")
     public CodeGenerator imageCodeGenerator() {
-        DefaultImageCodeGenerator imageCodeGenerator = new DefaultImageCodeGenerator();
+        ImageCodeGenerator imageCodeGenerator = new ImageCodeGenerator();
         imageCodeGenerator.setSecurityProperties(securityProperties);
         return imageCodeGenerator;
     }
@@ -31,7 +32,7 @@ public class ValidateCodeConfig {
     @Bean
     @ConditionalOnMissingBean(name = "smsCodeGenerator")
     public CodeGenerator smsCodeGenerator() {
-        DefaultSmsCodeGenerator smsCodeGenerator = new DefaultSmsCodeGenerator();
+        SmsCodeGenerator smsCodeGenerator = new SmsCodeGenerator();
         smsCodeGenerator.setSecurityProperties(securityProperties);
         return smsCodeGenerator;
     }
