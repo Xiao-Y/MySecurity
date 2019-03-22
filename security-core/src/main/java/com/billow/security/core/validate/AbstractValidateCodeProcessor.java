@@ -9,7 +9,6 @@ import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +20,7 @@ import java.util.Map;
  * @author liuyongtao
  * @create 2019-03-19 14:59
  */
-public abstract class AbstractValidateCodeProcessor implements ValidateCodeProcessor {
+public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> implements ValidateCodeProcessor {
 
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
@@ -34,9 +33,20 @@ public abstract class AbstractValidateCodeProcessor implements ValidateCodeProce
     @Autowired
     private ValidateCodeRepository validateCodeRepository;
 
+    /**
+     * 发送验证码
+     *
+     * @param [request, response, validateCode]
+     * @return void
+     * @author LiuYongTao
+     * @date 2019/3/19 15:06
+     */
+    protected abstract void send(HttpServletRequest request, HttpServletResponse response, C validateCode) throws Exception;
+
     @Override
     public void create(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ValidateCode validateCode = this.generate(request, response);
+        C validateCode = this.generate(request, response);
+        System.out.println(validateCode.getClass().getName());
         this.save(request, response, validateCode);
         this.send(request, response, validateCode);
     }
@@ -49,7 +59,7 @@ public abstract class AbstractValidateCodeProcessor implements ValidateCodeProce
      * @author LiuYongTao
      * @date 2019/3/19 15:05
      */
-    private void save(HttpServletRequest request, HttpServletResponse response, ValidateCode validateCode) throws Exception {
+    protected void save(HttpServletRequest request, HttpServletResponse response, C validateCode) throws Exception {
         ValidateCodeType validateCodeType = this.getValidateCodeType();
         validateCodeRepository.save(request, response, validateCode, validateCodeType);
     }
@@ -61,7 +71,7 @@ public abstract class AbstractValidateCodeProcessor implements ValidateCodeProce
      * @author LiuYongTao
      * @date 2019/3/20 16:15
      */
-    private ValidateCodeType getValidateCodeType() {
+    public ValidateCodeType getValidateCodeType() {
         String type = StringUtils.substringBefore(getClass().getSimpleName(), ValidateCodeProcessor.class.getSimpleName());
         return ValidateCodeType.valueOf(type.toUpperCase());
     }
@@ -74,7 +84,7 @@ public abstract class AbstractValidateCodeProcessor implements ValidateCodeProce
      * @author LiuYongTao
      * @date 2019/3/19 15:05
      */
-    private ValidateCode generate(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    protected C generate(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ValidateCodeType validateCodeType = this.getValidateCodeType();
         String processorType = validateCodeType.toString().toLowerCase() + CodeGenerator.class.getSimpleName();
         // ImageCodeGenerator 和 SmsCodeGenerator
@@ -82,13 +92,14 @@ public abstract class AbstractValidateCodeProcessor implements ValidateCodeProce
         if (codeGenerator == null) {
             throw new ValidateCodeException("生成校验码处理器 " + processorType + "不存在");
         }
-        return codeGenerator.generate(request, response);
+        ValidateCode generate = codeGenerator.generate(request, response);
+        return (C) generate;
     }
 
     @Override
     public void validate(HttpServletRequest request, HttpServletResponse response) throws ServletRequestBindingException {
         ValidateCodeType validateCodeType = this.getValidateCodeType();
-        ValidateCode codeInSession = validateCodeRepository.get(request, response, validateCodeType);
+        C codeInSession = (C) validateCodeRepository.get(request, response, validateCodeType);
 
         String codeInRequest = ServletRequestUtils.getStringParameter(request, validateCodeType.getParamNameOnValidate());
 
@@ -99,7 +110,6 @@ public abstract class AbstractValidateCodeProcessor implements ValidateCodeProce
             throw new ValidateCodeException("点击重新生成验证码");
         }
 
-        ServletWebRequest servletWebRequest = new ServletWebRequest(request);
         if (codeInSession.isExpried()) {
             validateCodeRepository.remove(request, response, validateCodeType);
             throw new ValidateCodeException("验证码已过期");
@@ -107,18 +117,22 @@ public abstract class AbstractValidateCodeProcessor implements ValidateCodeProce
         if (!StringUtils.equalsIgnoreCase(codeInSession.getCode(), codeInRequest)) {
             throw new ValidateCodeException("验证码不匹配");
         }
-
+        // 扩展其它的校验
+        this.validateExtend(request, response, codeInSession);
         validateCodeRepository.remove(request, response, validateCodeType);
     }
 
     /**
-     * 发送验证码
+     * 扩展其它的校验
      *
-     * @param [request, response, validateCode]
+     * @param request
+     * @param response
+     * @param codeInSession 放入session 中的数据
      * @return void
      * @author LiuYongTao
-     * @date 2019/3/19 15:06
+     * @date 2019/3/21 11:52
      */
-    protected abstract void send(HttpServletRequest request, HttpServletResponse response, ValidateCode validateCode) throws Exception;
+    protected void validateExtend(HttpServletRequest request, HttpServletResponse response, C codeInSession) throws ValidateCodeException {
 
+    }
 }

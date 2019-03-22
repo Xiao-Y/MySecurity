@@ -1,6 +1,7 @@
 package com.billow.security.core.validate.imageCode;
 
 import com.billow.security.core.properties.SecurityProperties;
+import com.billow.security.core.support.SmsValidateCode;
 import com.billow.security.core.utils.VerifyCodeUtils;
 import com.billow.security.core.validate.AbstractValidateCodeProcessor;
 import com.billow.security.core.support.ValidateCode;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * @create 2019-03-19 15:46
  */
 @Component("imageValidateCodeProcessor")
-public class ImageValidateCodeProcessor extends AbstractValidateCodeProcessor {
+public class ImageValidateCodeProcessor extends AbstractValidateCodeProcessor<ValidateCode> {
 
     @Autowired
     private SecurityProperties securityProperties;

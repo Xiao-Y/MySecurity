@@ -1,6 +1,6 @@
 package com.billow.security.browser.authentication;
 
-import com.billow.security.core.properties.LoginResponseType;
+import com.billow.security.core.support.LoginResponseType;
 import com.billow.security.core.properties.SecurityProperties;
 import com.billow.security.core.support.BaseResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;

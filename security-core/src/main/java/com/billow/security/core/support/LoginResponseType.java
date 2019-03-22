@@ -1,4 +1,4 @@
-package com.billow.security.core.properties;
+package com.billow.security.core.support;
 
 /**
  * 认证成功后的响应方式

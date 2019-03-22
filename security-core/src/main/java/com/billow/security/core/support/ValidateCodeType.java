@@ -1,7 +1,5 @@
 package com.billow.security.core.support;
 
-import com.billow.security.core.properties.SecurityConstants;
-
 public enum ValidateCodeType {
     /**
      * 短信验证码

@@ -1,6 +1,9 @@
 package com.billow.security.core.properties;
 
 
+import com.billow.security.core.support.LoginResponseType;
+import com.billow.security.core.support.SecurityConstants;
+
 /**
  * @author liuyongtao
  * @create 2019-03-13 14:50

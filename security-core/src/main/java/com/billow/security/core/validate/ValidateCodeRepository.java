@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author LiuYongTao
  * @date 2019/3/20 15:57
  */
-public interface ValidateCodeRepository {
+public interface ValidateCodeRepository<C extends ValidateCode> {
 
     /**
      * 保存验证码
@@ -21,7 +21,7 @@ public interface ValidateCodeRepository {
      * @param code
      * @param validateCodeType
      */
-    void save(HttpServletRequest request, HttpServletResponse response, ValidateCode code, ValidateCodeType validateCodeType);
+    void save(HttpServletRequest request, HttpServletResponse response, C code, ValidateCodeType validateCodeType);
 
     /**
      * 获取验证码

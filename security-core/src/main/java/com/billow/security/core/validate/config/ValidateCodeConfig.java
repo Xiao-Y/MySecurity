@@ -4,8 +4,8 @@ import com.billow.security.core.properties.SecurityProperties;
 import com.billow.security.core.validate.CodeGenerator;
 import com.billow.security.core.validate.imageCode.ImageCodeGenerator;
 import com.billow.security.core.validate.smsCode.SmsCodeGenerator;
-import com.billow.security.core.validate.smsCode.impl.DefaultSmsCodeSender;
 import com.billow.security.core.validate.smsCode.SmsCodeSender;
+import com.billow.security.core.validate.smsCode.impl.DefaultSmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -43,4 +43,16 @@ public class ValidateCodeConfig {
         DefaultSmsCodeSender smsCodeSender = new DefaultSmsCodeSender();
         return smsCodeSender;
     }
+//
+//    @Bean("smsValidateCodeProcessor")
+//    public ValidateCodeProcessor smsValidateCodeProcessor() {
+//        SmsValidateCodeProcessor smsValidateCodeProcessor = new SmsValidateCodeProcessor();
+//        return smsValidateCodeProcessor;
+//    }
+//
+//    @Bean("imageValidateCodeProcessor")
+//    public ValidateCodeProcessor imageValidateCodeProcessor() {
+//        ImageValidateCodeProcessor imageValidateCodeProcessor = new ImageValidateCodeProcessor();
+//        return imageValidateCodeProcessor;
+//    }
 }

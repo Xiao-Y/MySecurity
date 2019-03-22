@@ -1,6 +1,6 @@
 package com.billow.security.browser;
 
-import com.billow.security.core.properties.SecurityConstants;
+import com.billow.security.core.support.SecurityConstants;
 import com.billow.security.core.properties.SecurityProperties;
 import com.billow.security.core.support.BaseResponse;
 import com.billow.security.core.support.ResCodeEnum;

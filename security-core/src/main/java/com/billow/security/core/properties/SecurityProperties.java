@@ -11,12 +11,23 @@ public class SecurityProperties {
 
     private BrowserProperties browser = new BrowserProperties();
 
+    private SocialProperties social = new SocialProperties();
+
     public BrowserProperties getBrowser() {
         return browser;
     }
 
     public SecurityProperties setBrowser(BrowserProperties browser) {
         this.browser = browser;
+        return this;
+    }
+
+    public SocialProperties getSocial() {
+        return social;
+    }
+
+    public SecurityProperties setSocial(SocialProperties social) {
+        this.social = social;
         return this;
     }
 }

@@ -34,6 +34,7 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
             throw new InternalAuthenticationServiceException("无法获取用户信息");
         }
         SmsAuthenticationToken authenticationResult = new SmsAuthenticationToken(userDetails, userDetails.getAuthorities());
+        authenticationResult.setDetails(smsAuthenticationToken.getDetails());
         return authenticationResult;
     }
 
