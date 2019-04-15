@@ -9,13 +9,17 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -33,6 +37,26 @@ import java.util.List;
 public class UserController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    private ProviderSignInUtils providerSignInUtils;
+
+    /**
+     * 扫码登陆时，如果没有注册过的，跳到此方法
+     *
+     * @param user
+     * @param request
+     */
+    @PostMapping("/regist")
+    public void regist(User user, HttpServletRequest request) {
+        log.info("注册用户：{}", user);
+        // 不管是注册用户还是绑定用户，都会拿到用户唯一标志。
+        // 如果是注册，保存用户信息到用户表，返回生成的id，否则通过用户名查询出用户信息，放入原始的id
+        // doPostSignUp 第一个参数放入的值，最终会放到表的 userId 中，
+        // 在使用 SocialUserDetailsService 查询时，也要用对应的字段查询
+        providerSignInUtils.doPostSignUp(user.getId(), new ServletRequestAttributes(request));
+
+    }
 
     @GetMapping("/me")
     public Object getCurrentUser(Authentication user, HttpServletRequest request) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException {

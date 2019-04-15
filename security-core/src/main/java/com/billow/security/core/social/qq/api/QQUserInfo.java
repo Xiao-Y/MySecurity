@@ -1,4 +1,4 @@
-package com.billow.security.core.social.qq;
+package com.billow.security.core.social.qq.api;
 
 /**
  * qq 返回的用户信息

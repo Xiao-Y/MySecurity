@@ -1,9 +1,8 @@
 package com.billow.security.core.social.qq.connet;
 
 import com.billow.security.core.social.qq.api.QQ;
-import com.billow.security.core.social.qq.api.impl.QQImpl;
+import com.billow.security.core.social.qq.api.QQImpl;
 import org.springframework.social.oauth2.AbstractOAuth2ServiceProvider;
-import org.springframework.social.oauth2.OAuth2Template;
 
 /**
  * @author liuyongtao
@@ -16,9 +15,10 @@ public class QQServiceProvider extends AbstractOAuth2ServiceProvider<QQ> {
 
     private String appId;
 
-    public QQServiceProvider(String appId, String secret) {
+    public QQServiceProvider(String appId, String appSecret) {
         // String clientId, String clientSecret, String authorizeUrl, String accessTokenUrl
-        super(new OAuth2Template(appId, secret, authorizeUrl, accessTokenUrl));
+//        super(new OAuth2Template(appId, appSecret, authorizeUrl, accessTokenUrl));
+        super(new QQOAuth2Template(appId, appSecret, authorizeUrl, accessTokenUrl));
         this.appId = appId;
     }
 

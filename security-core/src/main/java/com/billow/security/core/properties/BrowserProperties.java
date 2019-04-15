@@ -15,6 +15,10 @@ public class BrowserProperties {
      */
     private String signInPage = SecurityConstants.DEFAULT_SIGN_IN_PAGE_URL;
     /**
+     * 注册页面，当引发登录行为的url以html结尾时，会跳到这里配置的url上
+     */
+    private String signUpPage = SecurityConstants.DEFAULT_SIGN_UP_PAGE_URL;
+    /**
      * 登录响应的方式，默认是json
      */
     private LoginResponseType signInResponseType = LoginResponseType.JSON;
@@ -84,6 +88,15 @@ public class BrowserProperties {
 
     public BrowserProperties setLoginProcessingUrl(String loginProcessingUrl) {
         this.loginProcessingUrl = loginProcessingUrl;
+        return this;
+    }
+
+    public String getSignUpPage() {
+        return signUpPage;
+    }
+
+    public BrowserProperties setSignUpPage(String signUpPage) {
+        this.signUpPage = signUpPage;
         return this;
     }
 }

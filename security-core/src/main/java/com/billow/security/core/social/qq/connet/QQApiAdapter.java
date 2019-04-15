@@ -1,6 +1,6 @@
 package com.billow.security.core.social.qq.connet;
 
-import com.billow.security.core.social.qq.QQUserInfo;
+import com.billow.security.core.social.qq.api.QQUserInfo;
 import com.billow.security.core.social.qq.api.QQ;
 import org.springframework.social.connect.ApiAdapter;
 import org.springframework.social.connect.ConnectionValues;

@@ -1,6 +1,7 @@
 package com.billow.security.browser;
 
 import com.billow.security.core.authentication.mobile.SmsAuthenticationSecurityConfig;
+import com.billow.security.core.properties.QQProperties;
 import com.billow.security.core.support.SecurityConstants;
 import com.billow.security.core.properties.SecurityProperties;
 import com.billow.security.core.validate.ValidateCodeFilter;
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService rbacUsernameUserDetailsService;
     @Autowired
     private SmsAuthenticationSecurityConfig smsAuthenticationSecurityConfig;
+    @Autowired
+    private SpringSocialConfigurer supportSpringSocialConfigurer;
     @Autowired
     private ValidateCodeFilter validateCodeFilter;
     @Autowired
@@ -72,6 +76,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable();
 
         http.apply(smsAuthenticationSecurityConfig);
+        http.apply(supportSpringSocialConfigurer);
     }
 
     /**
@@ -83,10 +88,16 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     private String[] antMatchersPermitAll() {
         List<String> list = new ArrayList<>();
-        list.add(securityProperties.getBrowser().getSignInPage());
         list.add(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL);
+        list.add(securityProperties.getBrowser().getSignInPage());
+        list.add(securityProperties.getBrowser().getSignUpPage());
         list.add("/code/image");
         list.add("/code/sms");
+        // /auth/qq
+        QQProperties qq = securityProperties.getSocial().getQq();
+        list.add(qq.getFilterProcessesUrl() + "/" + qq.getProviderId());
+        // TODO
+        list.add("/user/regist");
         return list.toArray(new String[list.size()]);
     }
 

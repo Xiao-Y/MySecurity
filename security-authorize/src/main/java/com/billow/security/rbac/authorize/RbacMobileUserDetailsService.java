@@ -26,7 +26,7 @@ public class RbacMobileUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String mobile) throws UsernameNotFoundException {
-        logger.info("mobile:{}", mobile);
+        logger.info("验证码登陆：mobile:{}", mobile);
 
         if (!"13012345678".equals(mobile)) {
             throw new UsernameNotFoundException("没有查询到用户");

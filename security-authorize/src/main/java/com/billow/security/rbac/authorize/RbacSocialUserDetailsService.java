@@ -6,21 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.social.security.SocialUser;
+import org.springframework.social.security.SocialUserDetails;
+import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author liuyongtao
- * @create 2019-03-13 15:22
- */
-@Service("rbacUsernameUserDetailsService")
-public class RbacUsernameUserDetailsService implements UserDetailsService {
+@Service("rbacSocialUserDetailsService")
+public class RbacSocialUserDetailsService implements SocialUserDetailsService {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -28,10 +25,10 @@ public class RbacUsernameUserDetailsService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.info("表单登陆：username:{}", username);
+    public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
+        logger.info("社交登陆：userId:{}", userId);
 
-        if (!"admin".equals(username)) {
+        if (!"admin".equals(userId)) {
             throw new UsernameNotFoundException("没有查询到用户");
         }
 
@@ -41,6 +38,6 @@ public class RbacUsernameUserDetailsService implements UserDetailsService {
         // 数据库中的密码
         String encode = passwordEncoder.encode("123456");
 
-        return new User(username, encode, authorities);
+        return new SocialUser(userId, encode, authorities);
     }
 }

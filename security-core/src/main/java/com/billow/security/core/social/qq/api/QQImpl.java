@@ -1,7 +1,7 @@
-package com.billow.security.core.social.qq.api.impl;
+package com.billow.security.core.social.qq.api;
 
 import com.billow.security.core.social.qq.api.QQ;
-import com.billow.security.core.social.qq.QQUserInfo;
+import com.billow.security.core.social.qq.api.QQUserInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -23,8 +23,10 @@ public class QQImpl extends AbstractOAuth2ApiBinding implements QQ {
     // 父类会自动携带accessToken
     public final static String URL_GET_USER_INFO = "https://graph.qq.com/user/get_user_info?oauth_consumer_key=%s&openid=%s";
 
+    // oauth_consumer_key
     private String appId;
-    private String openid;
+    // openid
+    private String openId;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -33,23 +35,26 @@ public class QQImpl extends AbstractOAuth2ApiBinding implements QQ {
         super(accessToken, TokenStrategy.ACCESS_TOKEN_PARAMETER);
         logger.info("QQImpl appId:{}, access_token:{}", appId, accessToken);
 
+        // 获取用户的 openId
         String url = String.format(URL_GET_OPENID, accessToken);
         // callback( {"client_id":"YOUR_APPID","openid":"YOUR_OPENID"} );
         String forObject = this.getRestTemplate().getForObject(url, String.class);
         logger.info("callback info:{}", forObject);
 
-        this.openid = StringUtils.substringBetween(forObject, "\"openid\":\"", "\"}");
-        logger.info("openId info:{}", this.openid);
+        this.openId = StringUtils.substringBetween(forObject, "\"openid\":\"", "\"}");
+        logger.info("openId info:{}", this.openId);
         this.appId = appId;
     }
 
     @Override
     public QQUserInfo getUserInfo() {
-        String url = String.format(URL_GET_USER_INFO, appId, openid);
+        String url = String.format(URL_GET_USER_INFO, appId, openId);
         String forObject = this.getRestTemplate().getForObject(url, String.class);
         logger.info("User Info:{}", forObject);
         try {
-            return objectMapper.readValue(forObject, QQUserInfo.class);
+            QQUserInfo qqUserInfo = objectMapper.readValue(forObject, QQUserInfo.class);
+            qqUserInfo.setOpenId(openId);
+            return qqUserInfo;
         } catch (IOException e) {
             throw new RuntimeException("获取用户信息异常", e);
         }
