@@ -2,6 +2,7 @@ package com.billow.security.browser;
 
 import com.billow.security.core.authentication.mobile.SmsAuthenticationSecurityConfig;
 import com.billow.security.core.properties.QQProperties;
+import com.billow.security.core.properties.SocialProperties;
 import com.billow.security.core.support.SecurityConstants;
 import com.billow.security.core.properties.SecurityProperties;
 import com.billow.security.core.validate.ValidateCodeFilter;
@@ -94,8 +95,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         list.add("/code/image");
         list.add("/code/sms");
         // /auth/qq
-        QQProperties qq = securityProperties.getSocial().getQq();
-        list.add(qq.getFilterProcessesUrl() + "/" + qq.getProviderId());
+        SocialProperties social = securityProperties.getSocial();
+        list.add(social.getFilterProcessesUrl() + "/" + social.getQq().getProviderId());
         // TODO
         list.add("/user/regist");
         return list.toArray(new String[list.size()]);

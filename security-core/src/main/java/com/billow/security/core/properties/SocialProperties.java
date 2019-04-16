@@ -8,6 +8,8 @@ package com.billow.security.core.properties;
  */
 public class SocialProperties {
 
+    private String filterProcessesUrl = "/auth";
+
     QQProperties qq = new QQProperties();
 
     public QQProperties getQq() {
@@ -16,6 +18,15 @@ public class SocialProperties {
 
     public SocialProperties setQq(QQProperties qq) {
         this.qq = qq;
+        return this;
+    }
+
+    public String getFilterProcessesUrl() {
+        return filterProcessesUrl;
+    }
+
+    public SocialProperties setFilterProcessesUrl(String filterProcessesUrl) {
+        this.filterProcessesUrl = filterProcessesUrl;
         return this;
     }
 }

@@ -25,6 +25,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
     private SecurityProperties securityProperties;
     @Autowired
     private DataSource dataSource;
+    // 如果实现此接口，则会实现自动注册功能
     @Autowired(required = false)
     private ConnectionSignUp connectionSignUp;
 
@@ -46,8 +47,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
 //        return new SpringSocialConfigurer();
 
         SupportSocialSecurityConfig supportSocialSecurityConfig = new SupportSocialSecurityConfig();
-        QQProperties qq = securityProperties.getSocial().getQq();
-        supportSocialSecurityConfig.setFilterProcessesUrl(qq.getFilterProcessesUrl());
+        supportSocialSecurityConfig.setFilterProcessesUrl(securityProperties.getSocial().getFilterProcessesUrl());
         supportSocialSecurityConfig.setSignupUrl(securityProperties.getBrowser().getSignUpPage());
         return supportSocialSecurityConfig;
     }

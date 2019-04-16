@@ -18,7 +18,7 @@ public class QQProperties {
      */
     private String appSecret;
     private String providerId = "qq";
-    private String filterProcessesUrl = "/auth";
+
 
     public String getAppId() {
         return appId;
@@ -44,15 +44,6 @@ public class QQProperties {
 
     public QQProperties setProviderId(String providerId) {
         this.providerId = providerId;
-        return this;
-    }
-
-    public String getFilterProcessesUrl() {
-        return filterProcessesUrl;
-    }
-
-    public QQProperties setFilterProcessesUrl(String filterProcessesUrl) {
-        this.filterProcessesUrl = filterProcessesUrl;
         return this;
     }
 }
