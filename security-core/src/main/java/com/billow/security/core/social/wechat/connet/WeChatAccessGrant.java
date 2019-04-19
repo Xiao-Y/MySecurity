@@ -6,15 +6,15 @@ import org.springframework.social.oauth2.AccessGrant;
  * @author liuyongtao
  * @create 2019-04-16 16:28
  */
-public class WechatAccessGrant extends AccessGrant {
+public class WeChatAccessGrant extends AccessGrant {
 
     private String openId;
 
-    public WeixinAccessGrant() {
+    public WeChatAccessGrant() {
         super("");
     }
 
-    public WeixinAccessGrant(String accessToken, String scope, String refreshToken, Long expiresIn) {
+    public WeChatAccessGrant(String accessToken, String scope, String refreshToken, Long expiresIn) {
         super(accessToken, scope, refreshToken, expiresIn);
     }
 

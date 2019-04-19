@@ -97,6 +97,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         // /auth/qq
         SocialProperties social = securityProperties.getSocial();
         list.add(social.getFilterProcessesUrl() + "/" + social.getQq().getProviderId());
+        list.add(social.getFilterProcessesUrl() + "/" + social.getWechat().getProviderId());
         // TODO
         list.add("/user/regist");
         return list.toArray(new String[list.size()]);

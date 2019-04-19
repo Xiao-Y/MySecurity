@@ -11,6 +11,7 @@ public class SocialProperties {
     private String filterProcessesUrl = "/auth";
 
     QQProperties qq = new QQProperties();
+    WechatProperties wechat = new WechatProperties();
 
     public QQProperties getQq() {
         return qq;
@@ -27,6 +28,15 @@ public class SocialProperties {
 
     public SocialProperties setFilterProcessesUrl(String filterProcessesUrl) {
         this.filterProcessesUrl = filterProcessesUrl;
+        return this;
+    }
+
+    public WechatProperties getWechat() {
+        return wechat;
+    }
+
+    public SocialProperties setWechat(WechatProperties wechat) {
+        this.wechat = wechat;
         return this;
     }
 }

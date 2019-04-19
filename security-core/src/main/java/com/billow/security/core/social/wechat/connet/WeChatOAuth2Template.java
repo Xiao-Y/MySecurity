@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.social.oauth2.AccessGrant;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.social.oauth2.OAuth2Template;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,7 +23,7 @@ import java.util.Map;
  * @author liuyongtao
  * @create 2019-04-16 16:05
  */
-public class WechatOAuth2Template extends OAuth2Template {
+public class WeChatOAuth2Template extends OAuth2Template {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -37,7 +37,7 @@ public class WechatOAuth2Template extends OAuth2Template {
 
     private String accessTokenUrl;
 
-    public WechatOAuth2Template(String clientId, String clientSecret, String authorizeUrl, String accessTokenUrl) {
+    public WeChatOAuth2Template(String clientId, String clientSecret, String authorizeUrl, String accessTokenUrl) {
         super(clientId, clientSecret, authorizeUrl, accessTokenUrl);
         setUseParametersForClientAuthentication(true);
         this.clientId = clientId;
@@ -95,7 +95,7 @@ public class WechatOAuth2Template extends OAuth2Template {
             throw new RuntimeException("获取access token失败, errcode:" + errcode + ", errmsg:" + errmsg);
         }
 
-        WechatAccessGrant accessToken = new WechatAccessGrant(
+        WeChatAccessGrant accessToken = new WeChatAccessGrant(
                 MapUtils.getString(result, "access_token"),
                 MapUtils.getString(result, "scope"),
                 MapUtils.getString(result, "refresh_token"),
@@ -104,6 +104,22 @@ public class WechatOAuth2Template extends OAuth2Template {
         accessToken.setOpenId(MapUtils.getString(result, "openid"));
 
         return accessToken;
+    }
+
+    /**
+     * 构建获取授权码的请求。也就是引导用户跳转到微信的地址。
+     */
+    @Override
+    public String buildAuthenticateUrl(OAuth2Parameters parameters) {
+        String url = super.buildAuthenticateUrl(parameters);
+        // snsapi_base
+        url = url + "&appid=" + clientId + "&scope=snsapi_login";
+        return url;
+    }
+
+    @Override
+    public String buildAuthorizeUrl(OAuth2Parameters parameters) {
+        return buildAuthenticateUrl(parameters);
     }
 
     /**

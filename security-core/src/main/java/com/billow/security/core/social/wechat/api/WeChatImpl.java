@@ -19,7 +19,7 @@ import java.util.List;
  * @author liuyongtao
  * @date 2019/4/16 15:53
  */
-public class WechatImpl extends AbstractOAuth2ApiBinding implements Wechat {
+public class WeChatImpl extends AbstractOAuth2ApiBinding implements WeChat {
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -30,22 +30,22 @@ public class WechatImpl extends AbstractOAuth2ApiBinding implements Wechat {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    public WechatImpl(String accessToken) {
+    public WeChatImpl(String accessToken) {
         // 指定accessToken 从 url 路径上获取
         super(accessToken, TokenStrategy.ACCESS_TOKEN_PARAMETER);
     }
 
     @Override
-    public WechatUserInfo getUserInfo(String openId) {
+    public WeChatUserInfo getUserInfo(String openId) {
         String url = String.format(URL_GET_USER_INFO, openId);
         String response = this.getRestTemplate().getForObject(url, String.class);
         if (StringUtils.contains(response, "errcode")) {
             return null;
         }
 
-        WechatUserInfo wechatUserInfo = null;
+        WeChatUserInfo wechatUserInfo = null;
         try {
-            wechatUserInfo = objectMapper.readValue(response, WechatUserInfo.class);
+            wechatUserInfo = objectMapper.readValue(response, WeChatUserInfo.class);
         } catch (IOException e) {
             logger.error("获取微信用户信息异常。", e);
         }

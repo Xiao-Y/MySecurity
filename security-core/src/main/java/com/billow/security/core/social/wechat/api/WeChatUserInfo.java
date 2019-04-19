@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author liuyongtao
  * @create 2019-04-16 15:47
  */
-public class WechatUserInfo {
+public class WeChatUserInfo {
 
     /**
      * 普通用户的标识，对当前开发者帐号唯一
@@ -55,7 +55,7 @@ public class WechatUserInfo {
         return openid;
     }
 
-    public WechatUserInfo setOpenid(String openid) {
+    public WeChatUserInfo setOpenid(String openid) {
         this.openid = openid;
         return this;
     }
@@ -64,7 +64,7 @@ public class WechatUserInfo {
         return nickname;
     }
 
-    public WechatUserInfo setNickname(String nickname) {
+    public WeChatUserInfo setNickname(String nickname) {
         this.nickname = nickname;
         return this;
     }
@@ -73,7 +73,7 @@ public class WechatUserInfo {
         return language;
     }
 
-    public WechatUserInfo setLanguage(String language) {
+    public WeChatUserInfo setLanguage(String language) {
         this.language = language;
         return this;
     }
@@ -82,7 +82,7 @@ public class WechatUserInfo {
         return sex;
     }
 
-    public WechatUserInfo setSex(String sex) {
+    public WeChatUserInfo setSex(String sex) {
         this.sex = sex;
         return this;
     }
@@ -91,7 +91,7 @@ public class WechatUserInfo {
         return province;
     }
 
-    public WechatUserInfo setProvince(String province) {
+    public WeChatUserInfo setProvince(String province) {
         this.province = province;
         return this;
     }
@@ -100,7 +100,7 @@ public class WechatUserInfo {
         return city;
     }
 
-    public WechatUserInfo setCity(String city) {
+    public WeChatUserInfo setCity(String city) {
         this.city = city;
         return this;
     }
@@ -109,7 +109,7 @@ public class WechatUserInfo {
         return country;
     }
 
-    public WechatUserInfo setCountry(String country) {
+    public WeChatUserInfo setCountry(String country) {
         this.country = country;
         return this;
     }
@@ -118,7 +118,7 @@ public class WechatUserInfo {
         return headimgurl;
     }
 
-    public WechatUserInfo setHeadimgurl(String headimgurl) {
+    public WeChatUserInfo setHeadimgurl(String headimgurl) {
         this.headimgurl = headimgurl;
         return this;
     }
@@ -127,7 +127,7 @@ public class WechatUserInfo {
         return privilege;
     }
 
-    public WechatUserInfo setPrivilege(String[] privilege) {
+    public WeChatUserInfo setPrivilege(String[] privilege) {
         this.privilege = privilege;
         return this;
     }
@@ -136,7 +136,7 @@ public class WechatUserInfo {
         return unionid;
     }
 
-    public WechatUserInfo setUnionid(String unionid) {
+    public WeChatUserInfo setUnionid(String unionid) {
         this.unionid = unionid;
         return this;
     }
