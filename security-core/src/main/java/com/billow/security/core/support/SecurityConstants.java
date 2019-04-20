@@ -29,13 +29,13 @@ public interface SecurityConstants {
      *
      * @see SecurityController
      */
-    String DEFAULT_SIGN_IN_PAGE_URL = "/standard-login.html";
+    String DEFAULT_SIGN_IN_PAGE = "/default-login.html";
     /**
      * 默认注册页面
      *
      * @see SecurityController
      */
-    String DEFAULT_SIGN_UP_PAGE_URL = "/standard-signUp.html";
+    String DEFAULT_SIGN_UP_PAGE_URL = "/default-signUp.html";
     /**
      * 验证图片验证码时，http请求中默认的携带图片验证码信息的参数的名称
      */
@@ -59,9 +59,19 @@ public interface SecurityConstants {
     /**
      * session失效默认的跳转地址
      */
-    String DEFAULT_SESSION_INVALID_URL = "/imooc-session-invalid.html";
+    String DEFAULT_SESSION_INVALID_URL = "/default-session-invalid.html";
     /**
      * 获取第三方用户信息的url
      */
     String DEFAULT_SOCIAL_USER_INFO_URL = "/social/user";
+
+    /**
+     * 默认点击退出的url
+     */
+    String DEFAULT_SIGN_OUT_URL = "/logOut";
+
+    /**
+     * 默认退出成功后跳转的页面
+     */
+    String DEFAULT_SIGN_OUT_PAGE = "/default-logout.html";
 }

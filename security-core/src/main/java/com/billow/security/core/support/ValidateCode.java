@@ -1,5 +1,6 @@
 package com.billow.security.core.support;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
  * @author liuyongtao
  * @create 2019-03-15 9:18
  */
-public class ValidateCode {
+public class ValidateCode implements Serializable {
 
     private String code;
 

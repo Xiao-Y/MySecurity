@@ -40,7 +40,7 @@ public class DefauleAuthenticationSuccessHandler extends SavedRequestAwareAuthen
                                         Authentication authentication) throws ServletException, IOException {
         logger.info("登录成功");
 
-        if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getSignInResponseType())) {
+        if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getLogInResponseType())) {
             response.setContentType("application/json;charset=UTF-8");
             String type = authentication.getClass().getName();
             BaseResponse<String> baseResponse = new BaseResponse();
@@ -49,10 +49,10 @@ public class DefauleAuthenticationSuccessHandler extends SavedRequestAwareAuthen
         } else {
             // 如果设置了imooc.security.browser.singInSuccessUrl，总是跳到设置的地址上
             // 如果没设置，则尝试跳转到登录之前访问的地址上，如果登录前访问地址为空，则跳到网站根路径上
-            if (StringUtils.isNotBlank(securityProperties.getBrowser().getSingInSuccessUrl())) {
+            if (StringUtils.isNotBlank(securityProperties.getBrowser().getLogInSuccessUrl())) {
                 requestCache.removeRequest(request, response);
                 setAlwaysUseDefaultTargetUrl(true);
-                setDefaultTargetUrl(securityProperties.getBrowser().getSingInSuccessUrl());
+                setDefaultTargetUrl(securityProperties.getBrowser().getLogInSuccessUrl());
             }
             super.onAuthenticationSuccess(request, response, authentication);
         }

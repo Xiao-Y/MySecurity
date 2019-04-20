@@ -95,7 +95,18 @@ public enum ResCodeEnum {
      * "0021", "访问的服务需要身份认证，请引导用户到登录页"
      */
     RESCODE_NOT_FOUND_SIGNIN_PAGE("0021", "访问的服务需要身份认证，请引导用户到登录页"),
-    RESCODE_NOT_FOUND_SIGNIN_PAGE("0021", "访问的服务需要身份认证，请引导用户到登录页"),
+    /**
+     * "0022", "session 失效，请重新登陆"
+     */
+    RESCODE_SEESION_INVALID("0022", "登陆超时，请重新登陆"),
+    /**
+     * "0023", "session 失效，有可能是并发登录导致的"
+     */
+    RESCODE_SEESION_INVALID_CONCURRENCY("0023", "账号在其它地方登录"),
+    /**
+     * "0024", "退出成功"
+     */
+    RESCODE_LOGOUT_SUCCESS("0024", "退出成功"),
     /**
      * "8888", "系统服务异常，熔断请求"
      */

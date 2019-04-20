@@ -22,11 +22,15 @@ public class BaseResponse<T> implements Serializable {
         this.resMsg = ResCodeEnum.OK_NAME;
     }
 
-    public BaseResponse(String resCode, String resMsg, String traceID, String spanID) {
+    public BaseResponse(String resCode, String resMsg, String traceID, String spanID, T resData) {
         this.resCode = resCode;
         this.resMsg = resMsg;
         this.traceID = traceID;
         this.spanID = spanID;
+    }
+
+    public BaseResponse(String resCode, String resMsg, String traceID, String spanID) {
+        this(resCode, resMsg, traceID, spanID, null);
     }
 
     public BaseResponse(String resCode, String traceID, String spanID) {
@@ -34,20 +38,19 @@ public class BaseResponse<T> implements Serializable {
     }
 
     public BaseResponse(String resCode, String resMsg, T resData) {
-        this.resCode = resCode;
-        this.resMsg = resMsg;
-        this.resData = resData;
+        this(resCode, resMsg, null, null, resData);
+    }
+
+    public BaseResponse(ResCodeEnum resCodeEnum) {
+        this(resCodeEnum.getStatusCode(), ResCodeEnum.getResCodeEnum(resCodeEnum.getStatusCode()), null, null, null);
     }
 
     public BaseResponse(String resCode) {
-        this.resCode = resCode;
-        this.resMsg = ResCodeEnum.getResCodeEnum(resCode);
+        this(resCode, ResCodeEnum.getResCodeEnum(resCode), null, null, null);
     }
 
     public BaseResponse(String resCode, T resData) {
-        this.resCode = resCode;
-        this.resMsg = ResCodeEnum.getResCodeEnum(resCode);
-        this.resData = resData;
+        this(resCode, ResCodeEnum.getResCodeEnum(resCode), null, null, resData);
     }
 
     public Map<String, String> getExt() {

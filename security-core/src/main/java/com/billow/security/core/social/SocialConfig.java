@@ -48,7 +48,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
         SupportSocialSecurityConfig supportSocialSecurityConfig = new SupportSocialSecurityConfig();
         supportSocialSecurityConfig.setFilterProcessesUrl(securityProperties.getSocial().getFilterProcessesUrl());
-        supportSocialSecurityConfig.setSignupUrl(securityProperties.getBrowser().getSignUpPage());
+        supportSocialSecurityConfig.setSignupUrl(securityProperties.getBrowser().getRegistPage());
         return supportSocialSecurityConfig;
     }
 

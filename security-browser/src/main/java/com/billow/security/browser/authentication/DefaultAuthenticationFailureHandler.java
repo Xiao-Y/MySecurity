@@ -52,7 +52,7 @@ public class DefaultAuthenticationFailureHandler extends SimpleUrlAuthentication
         }
         logger.info("登录失败:{}", ResCodeEnum.getResCodeEnum(resCode));
 
-        if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getSignInResponseType())) {
+        if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getLogInResponseType())) {
             response.setContentType("application/json;charset=UTF-8");
 
             BaseResponse<String> baseResponse = new BaseResponse(resCode);
