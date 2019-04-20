@@ -95,6 +95,7 @@ public enum ResCodeEnum {
      * "0021", "访问的服务需要身份认证，请引导用户到登录页"
      */
     RESCODE_NOT_FOUND_SIGNIN_PAGE("0021", "访问的服务需要身份认证，请引导用户到登录页"),
+    RESCODE_NOT_FOUND_SIGNIN_PAGE("0021", "访问的服务需要身份认证，请引导用户到登录页"),
     /**
      * "8888", "系统服务异常，熔断请求"
      */
