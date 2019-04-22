@@ -17,15 +17,21 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <security-browser.version>1.0-SNAPSHOT</security-browser.version>
+        <security-app.version>1.0-SNAPSHOT</security-app.version>
         <security-authorize.version>1.0-SNAPSHOT</security-authorize.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.billow</groupId>
-            <artifactId>security-browser</artifactId>
-            <version>${security-browser.version}</version>
+            <artifactId>security-app</artifactId>
+            <version>${security-app.version}</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.billow</groupId>-->
+            <!--<artifactId>security-browser</artifactId>-->
+            <!--<version>${security-browser.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.billow</groupId>
             <artifactId>security-authorize</artifactId>
@@ -40,10 +46,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>commons-io</groupId>-->
+            <!--<artifactId>commons-io</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>

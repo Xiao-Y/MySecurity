@@ -14,14 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 public interface ValidateCodeProcessor {
 
     /**
-     * 验证码生成的前缀
-     *
-     * @author LiuYongTao
-     * @date 2019/3/19 14:57
-     */
-    String SESSION_KEY_FOR_CODE_ = "SESSION_KEY_FOR_CODE_";
-
-    /**
      * 创建验证码流程
      *
      * @param [request, response]

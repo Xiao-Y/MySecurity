@@ -36,11 +36,12 @@ public class RbacUsernameUserDetailsService implements UserDetailsService {
         }
 
         Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority("admin"));
+        authorities.add(new SimpleGrantedAuthority("ADMIN"));
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
         // 数据库中的密码
         String encode = passwordEncoder.encode("123456");
-
+        logger.info("数据库中的密码-->" + encode);
         return new User(username, encode, authorities);
     }
 }

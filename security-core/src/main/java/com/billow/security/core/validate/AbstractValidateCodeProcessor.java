@@ -4,6 +4,8 @@ import com.billow.security.core.exception.ValidateCodeException;
 import com.billow.security.core.support.ValidateCode;
 import com.billow.security.core.support.ValidateCodeType;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
@@ -22,7 +24,7 @@ import java.util.Map;
  */
 public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> implements ValidateCodeProcessor {
 
-    private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * 系统收集所有的实现 CodeGenerator 接口的 Bean
@@ -46,9 +48,36 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
     @Override
     public void create(HttpServletRequest request, HttpServletResponse response) throws Exception {
         C validateCode = this.generate(request, response);
-        System.out.println(validateCode.getClass().getName());
+        logger.info("验证码生成器:" + validateCode.getClass().getName());
         this.save(request, response, validateCode);
         this.send(request, response, validateCode);
+    }
+
+
+    @Override
+    public void validate(HttpServletRequest request, HttpServletResponse response) throws ServletRequestBindingException {
+        ValidateCodeType validateCodeType = this.getValidateCodeType();
+        C codeInSession = (C) validateCodeRepository.get(request, response, validateCodeType);
+
+        String codeInRequest = ServletRequestUtils.getStringParameter(request, validateCodeType.getParamNameOnValidate());
+
+        if (StringUtils.isBlank(codeInRequest)) {
+            throw new ValidateCodeException("验证码不能为空");
+        }
+        if (codeInSession == null) {
+            throw new ValidateCodeException("点击重新生成验证码");
+        }
+
+        if (codeInSession.isExpried()) {
+            validateCodeRepository.remove(request, response, validateCodeType);
+            throw new ValidateCodeException("验证码已过期");
+        }
+        if (!StringUtils.equalsIgnoreCase(codeInSession.getCode(), codeInRequest)) {
+            throw new ValidateCodeException("验证码不匹配");
+        }
+        // 扩展其它的校验
+        this.validateExtend(request, response, codeInSession);
+        validateCodeRepository.remove(request, response, validateCodeType);
     }
 
     /**
@@ -94,32 +123,6 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
         }
         ValidateCode generate = codeGenerator.generate(request, response);
         return (C) generate;
-    }
-
-    @Override
-    public void validate(HttpServletRequest request, HttpServletResponse response) throws ServletRequestBindingException {
-        ValidateCodeType validateCodeType = this.getValidateCodeType();
-        C codeInSession = (C) validateCodeRepository.get(request, response, validateCodeType);
-
-        String codeInRequest = ServletRequestUtils.getStringParameter(request, validateCodeType.getParamNameOnValidate());
-
-        if (StringUtils.isBlank(codeInRequest)) {
-            throw new ValidateCodeException("验证码不能为空");
-        }
-        if (codeInSession == null) {
-            throw new ValidateCodeException("点击重新生成验证码");
-        }
-
-        if (codeInSession.isExpried()) {
-            validateCodeRepository.remove(request, response, validateCodeType);
-            throw new ValidateCodeException("验证码已过期");
-        }
-        if (!StringUtils.equalsIgnoreCase(codeInSession.getCode(), codeInRequest)) {
-            throw new ValidateCodeException("验证码不匹配");
-        }
-        // 扩展其它的校验
-        this.validateExtend(request, response, codeInSession);
-        validateCodeRepository.remove(request, response, validateCodeType);
     }
 
     /**

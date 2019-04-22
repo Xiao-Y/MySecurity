@@ -1,10 +1,11 @@
-package com.billow.security.browser.validate.imageCode;
+package com.billow.security.browser.validate.code.impl;
 
 import com.billow.security.core.support.ValidateCode;
 import com.billow.security.core.support.ValidateCodeType;
 import com.billow.security.core.validate.ValidateCodeRepository;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author liuyongtao
  * @create 2019-03-20 16:02
  */
-@Service
+@Component
 public class SessionValidateCodeRepository implements ValidateCodeRepository {
 
     String SESSION_KEY_FOR_CODE_ = "SESSION_KEY_FOR_CODE_";
